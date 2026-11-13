@@ -1,71 +1,115 @@
+
 # 🖼️ Image Captioning with CNN-LSTM
 
-> A hybrid deep learning system for automatic image captioning using ResNet18 encoder and LSTM decoder with Word2Vec embeddings.
+> A Hybrid Deep Learning System for Automatic Image Caption Generation using ResNet18, LSTM Decoder and Word2Vec Embeddings.
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red)](https://pytorch.org/)
-[![Gradio](https://img.shields.io/badge/Gradio-4.0%2B-orange)](https://gradio.app/)
+**Maintained and Modified by: Ruchi Upadhyay**
 
 ---
 
 ## 📋 Overview
 
-This project implements an **image captioning system** that generates natural language descriptions for images. It combines computer vision and NLP techniques using a hybrid architecture:
+This project implements an Image Captioning System that generates natural language descriptions for images using Deep Learning.
 
-- **Encoder**: ResNet18 (pretrained on ImageNet) for visual feature extraction
-- **Decoder**: LSTM with Word2Vec embeddings for caption generation
-- **Baseline**: Comparison with BLIP (State-of-the-Art) model
+It combines Computer Vision and Natural Language Processing through a hybrid architecture.
+
+- **Encoder:** ResNet18 for visual feature extraction
+- **Decoder:** LSTM for caption generation
+- **Word Embeddings:** Word2Vec
+- **Dataset:** Flickr8k
 
 ---
 
 ## 🏗️ Architecture
 
+```text
+Image (224×224)
+       ↓
+ResNet18 Encoder
+       ↓
+Image Features (512D)
+       ↓
+LSTM Decoder
+       ↓
+Generated Caption
 ```
-Image (224×224) → ResNet18 (Frozen) → Image Features (512D) → LSTM Decoder → Caption
-                           ↓
-                   Word2Vec (Frozen) → Word Embeddings (300D)
-```
+
+---
 
 ## 📊 Dataset
 
-- **Flickr8k**: 8,091 images × 5 captions each
-- **Augmentation**: Horizontal flipping (2×) → 16,182 samples
-- **Split**: 80% Train | 10% Val | 10% Test
+- Flickr8k Dataset
+- 8,091 original images
+- 40,460 image captions
+- Horizontal flipping for data augmentation
+- 80% Training, 10% Validation, 10% Testing
 
 ---
 
 ## 🚀 Features
 
-- ✅ Short caption (20 tokens) & Long caption (40 tokens) models
-- ✅ Pretrained ResNet18 & Word2Vec embeddings
-- ✅ Interactive Gradio web interface
-- ✅ Comparison with BLIP (SOTA) baseline
-- ✅ BLEU-1 evaluation metric
+- Short Caption Generation (20 tokens)
+- Long Caption Generation (40 tokens)
+- Pretrained ResNet18 Encoder
+- Word2Vec Embeddings
+- Gradio Web Interface
+- BLEU-1 Evaluation
 
-### Model Performance
+---
 
-| Model | Max Length | BLEU-1 |
-|-------|------------|--------|
-| Short Caption | 20 | **0.2309** |
-| Long Caption | 40 | **0.2151** |
-| BLIP (SOTA) | 50 | **0.3345** |
+## 🛠️ Technologies Used
+
+- Python
+- PyTorch
+- Torchvision
+- NLTK
+- Pandas
+- NumPy
+- Gradio
+- Jupyter Notebook
+
+---
+
+## 📁 Project Structure
+
+```text
+CNN-Lstm-Image-Caption-Generator/
+│
+├── data_creation.ipynb
+├── hybrid.ipynb
+├── hybrid_long.ipynb
+├── app.py
+├── captions.txt
+├── Flickr8k.token.txt
+├── images/
+├── README.md
+└── report_file.pdf
+```
 
 ---
 
 ## 🛠️ Installation
 
+### Step 1: Clone Repository
+
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/image-captioning.git
-cd image-captioning
+git clone https://github.com/warriorruchi/CNN-Lstm-Image-Caption-Generator.git
 
-# Install dependencies
-pip install -r requirements.txt
-
-# Download required data
-# - Flickr8k dataset → images/ directory
-# - GoogleNews Word2Vec → project root
+cd CNN-Lstm-Image-Caption-Generator
 ```
+
+### Step 2: Install Dependencies
+
+```bash
+pip install torch torchvision
+pip install pandas numpy nltk pillow gradio
+```
+
+### Step 3: Prepare Dataset
+
+- Download Flickr8k images.
+- Prepare the captions file.
+- Download GoogleNews Word2Vec embeddings.
 
 ---
 
@@ -74,99 +118,74 @@ pip install -r requirements.txt
 ### Training
 
 ```bash
-jupyter notebook data_creation.ipynb      # Preprocess dataset
-jupyter notebook hybrid.ipynb             # Train short model
-jupyter notebook hybrid_long.ipynb        # Train long model
+jupyter notebook data_creation.ipynb
+jupyter notebook hybrid.ipynb
+jupyter notebook hybrid_long.ipynb
 ```
 
-### Inference
+### Run Application
 
 ```bash
-python app.py                             # Launch web interface
-```
-
-Upload an image to compare captions from all three models simultaneously.
-
----
-
-## 📁 Project Structure
-
-```
-├── data_creation.ipynb          # Dataset preprocessing
-├── hybrid.ipynb                 # Short model training
-├── hybrid_long.ipynb            # Long model training  
-├── app.py                       # Gradio web app
-├── report_file.pdf              # Complete report
-└── requirements.txt             # Dependencies
+python app.py
 ```
 
 ---
 
-## 📈 Results
+## 📈 Evaluation
 
-### Sample Captions
+The project uses BLEU-1 as an evaluation metric to measure the quality of generated captions.
 
-| Image | Ground Truth | Our Model | BLIP (SOTA) |
-|-------|--------------|-----------|-------------|
-| 🐕 | "Dog running on beach" | ✅ "dog running in snow" | ✅ "dog on beach with ball" |
-| 🎾 | "Tennis player hitting ball" | ❌ "man in basketball" | ✅ "man playing tennis" |
-
-### Training Progress
-
-```
-Short Model: Train Loss 4.41 → 2.69 | Val Loss 4.22 → 3.85
-Long Model:  Train Loss 4.97 → 3.46 | Val Loss 4.74 → 4.52
-```
+Actual model performance will be updated after successful training and evaluation.
 
 ---
 
 ## ⚠️ Limitations
 
-- No spatial attention mechanism
-- Exposure bias causing repetition in long captions
-- Small dataset (Flickr8k) limits generalization
-- BLEU-1 metric ignores grammar/semantic quality
+- No spatial attention mechanism.
+- Long captions may contain repetition.
+- Flickr8k is a relatively small dataset.
+- BLEU-1 does not fully measure semantic quality.
 
 ---
 
-## 🔮 Future Work
+## 🔮 Future Improvements
 
-- Add spatial attention (Show, Attend and Tell)
-- Upgrade to Vision Transformers
-- Implement beam search decoding
-- Train on larger dataset (MS-COCO)
-- Use better metrics (CIDEr, SPICE, BERTScore)
+- Implement spatial attention.
+- Explore Vision Transformers.
+- Implement beam search decoding.
+- Train using larger datasets.
+- Evaluate using CIDEr and SPICE.
 
 ---
 
-## 👥 Contributors
+## 👩‍💻 Project Maintainer
 
-| Name | Roll No. | Contributions |
-|------|----------|---------------|
-| **Prashant Kumar Mishra** | 2447021 | Architecture design, Long model training, BLIP evaluation, Gradio interface |
-| **Nikita Mewada** | 2447027 | Data preprocessing, Short model training, Loss visualization, Documentation |
+**Ruchi Upadhyay**
+
+GitHub: [@warriorruchi](https://github.com/warriorruchi)
+
+Project Repository: [CNN-LSTM Image Caption Generator](https://github.com/warriorruchi/CNN-Lstm-Image-Caption-Generator)
+
+---
+
+## 🙌 Original Project Acknowledgement
+
+This project is adapted from the original work of:
+
+- Prashant Kumar Mishra
+- Nikita Mewada
+
+Original contributions are acknowledged.
 
 ---
 
 ## 📚 References
 
-- [Show and Tell](https://arxiv.org/abs/1411.4555) - Vinyals et al. (2015)
-- [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) - Xu et al. (2015)
-- [BLIP](https://arxiv.org/abs/2201.12086) - Li et al. (2022)
+- [Show and Tell (2015)](https://arxiv.org/abs/1411.4555)
+- [Show, Attend and Tell (2015)](https://arxiv.org/abs/1502.03044)
+- [BLIP (2022)](https://arxiv.org/abs/2201.12086)
 - [Flickr8k Dataset](https://www.jair.org/index.php/jair/article/view/10833)
 
 ---
 
-## 📄 License
-
-MIT License
-
----
-
-**Course**: Natural Language Processing (MC470405)  
-**Institution**: National Institute of Technology Patna  
-**Semester**: MCA (AI & IoT) 4th Sem
-
-<div align="center">
-  Made with ❤️ for NLP Course Project
-</div>****
+**Made with ❤️ using Deep Learning and NLP.**
