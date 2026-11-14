@@ -172,8 +172,8 @@ Project Repository: [CNN-LSTM Image Caption Generator](https://github.com/warrio
 
 This project is adapted from the original work of:
 
-- Prashant Kumar Mishra
-- Nikita Mewada
+- Ruchi Upadhyay
+- Riddhima Pant
 
 Original contributions are acknowledged.
 
